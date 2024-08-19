@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1724031022110,
+      "tag": "0000_organic_mindworm",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1724073399993,
+      "tag": "0001_outgoing_celestials",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724092551503,
+      "tag": "0002_natural_purifiers",
+      "breakpoints": true
+    }
+  ]
+}
