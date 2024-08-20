@@ -36,7 +36,7 @@ export default function EntryPage({ params }: { params: { slug: string|null } })
             console.error(error); 
         }
 
-    }, []);
+    }, [params.slug]);
 
     return (
         <main>
