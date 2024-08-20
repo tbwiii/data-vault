@@ -1,9 +1,9 @@
 import { Button, Card, Title, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Entry } from '@schema/entries';
+import { EntryType } from '@schema/entries';
 import slugOMatic from '@helpers/slugOMatic';
 
-const saveEntry = async (values:Partial<Entry>) => {
+const saveEntry = async (values:Partial<EntryType>) => {
     return fetch(`/api/entry/${values.entryId ? values.entryId : 'new'}`, { 
         method: "POST",
         body: JSON.stringify(values),
@@ -18,16 +18,16 @@ type SetState<T> = React.Dispatch<React.SetStateAction<T>>
 export default function EntryForm  (
     { entry, setEditing, setEntry }
     :{ 
-        entry: Partial<Entry>,
+        entry: Partial<EntryType>,
         setEditing: SetState<boolean>,
-        setEntry: SetState<Partial<Entry>> 
+        setEntry: SetState<Partial<EntryType>> 
     }
 ) {
     const form = useForm({
         initialValues : entry,
     });
 
-    const submit = async (values: Partial<Entry>) => {
+    const submit = async (values: Partial<EntryType>) => {
         setEditing(false);
         try {
             const res = await saveEntry(values);

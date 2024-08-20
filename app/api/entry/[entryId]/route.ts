@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { entries } from '@db';
 
 export const GET = async (req:Request, { params }: { params: { entryId: string } }) => {
-    const entry = await entries.getEntry(params.entryId);
+    const entry = await entries.getEntryById(params.entryId);
     return NextResponse.json({ entry }, { status: 200 });
 }
 

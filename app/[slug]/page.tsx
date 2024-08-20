@@ -1,37 +1,19 @@
 'use client';
-
 import { useState, useEffect } from 'react';
-import Markdown from 'react-markdown'
-import './markdown.css';
-import { Entry } from '@schema/entries';
+import { EntryType } from '@schema/entries';
+import { Container } from '@mantine/core';
+import Entry from './Entry';
 import EntryForm from './EntryForm';
-
-type SetState<T> = React.Dispatch<React.SetStateAction<T>>
-
-const Content = ({ title, body, createdAt, setEditing }: Partial<Entry|null> & { setEditing: SetState<boolean> }) => {
-    return (
-        <div
-            className='grid gap-3'
-        >
-            <h1 
-                className='text-4xl font-bold'
-                onClick={ () => setEditing(true) }
-            >{ title }</h1>
-            <span>{ createdAt }</span>
-            <div onClick={ () => setEditing(true) }>
-                <Markdown className='markdown-body text-gray-300'>{ body }</Markdown>
-            </div>
-        </div>
-    );
-}
+import './markdown.css';
 
 export default function EntryPage({ params }: { params: { slug: string } }) {
     const [editing, setEditing] = useState(false);
-    const [entry, setEntry] = useState<Partial<Entry>>({
+    const [entry, setEntry] = useState<Partial<EntryType>>({
         title: '',
         body: '',
         slug: '',
         createdAt: '',
+        updatedAt: '',
     });
 
     useEffect(() => {
@@ -42,7 +24,7 @@ export default function EntryPage({ params }: { params: { slug: string } }) {
 
         const entryFetch = async () => {
             const { entry } = await (
-                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/entry/11`)
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${params.slug}`)
             ).json();
             
             setEntry(entry);
@@ -57,20 +39,20 @@ export default function EntryPage({ params }: { params: { slug: string } }) {
     }, []);
 
     return (
-        <div className='p-8'>
-            { 
-                editing 
-                    ? <EntryForm 
+        <main>
+            { editing 
+                ? <Container>
+                    <EntryForm 
                         entry={ entry }
                         setEntry={ setEntry }
                         setEditing={ setEditing }
                     /> 
-                    : <Content 
-                        title={entry?.title}
-                        body={entry?.body}
-                        setEditing={ setEditing }
-                    />
+                </Container>
+                : <Entry 
+                    { ...entry }
+                    setEditing={ setEditing }
+                />
             }   
-        </div>
+        </main>
     );
 }
