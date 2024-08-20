@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import EntryList from './EntryList';
-import { $post } from '@helpers/api';
+import api from '@helpers/api';
 
 export default async function RecentCreated() {
     

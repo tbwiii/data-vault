@@ -1,7 +1,7 @@
 import { Button, Card, Title, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { EntryType } from '@schema/entries';
-import { $post } from '@helpers/api';
+import api from '@helpers/api';
 import slugOMatic from '@helpers/slugOMatic';
 
 const saveEntry = async (values:Partial<EntryType>) => {
