@@ -1,21 +1,14 @@
 import { Suspense } from 'react';
 import React from 'react';
 import EntryList from './EntryList';
-
-
+import { $post } from '@helpers/api';
 
 export default async function RecentCreated() {
-    const data = await (
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/entries`,{
-            method: "POST",
-            cache: 'no-store',
-            body: JSON.stringify({
-                orderBy: 'createdAt',
-                limit: 5,
-                direction: 'desc',
-            }),
-        })
-    ).json();
+    const data = await $post('/entries', {
+        orderBy: 'createdAt',
+        limit: 5,
+        direction: 'desc',
+    });
 
     return (
         <div>
