@@ -5,7 +5,7 @@ import { $post } from '@helpers/api';
 import slugOMatic from '@helpers/slugOMatic';
 
 const saveEntry = async (values:Partial<EntryType>) => {
-    return $post('/entries', {
+    return api.$post('/entries', {
         orderBy: 'createdAt',
         limit: 5,
         direction: 'desc',

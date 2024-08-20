@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import React from 'react';
 import EntryList from './EntryList';
-import { $post } from '@helpers/api';
+import api from '@helpers/api';
 
 export default async function RecentCreated() {
-    const data = await $post('/entries', {
+    const data = await api.$post('/entries', {
         orderBy: 'createdAt',
         limit: 5,
         direction: 'desc',

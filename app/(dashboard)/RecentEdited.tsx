@@ -4,7 +4,7 @@ import { $post } from '@helpers/api';
 
 export default async function RecentCreated() {
     
-    const data = await $post('/entries', {
+    const data = await api.$post('/entries', {
         orderBy: 'updatedAt',
         limit: 5,
         direction: 'desc',
