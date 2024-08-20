@@ -6,7 +6,7 @@ import Entry from './Entry';
 import EntryForm from './EntryForm';
 import './markdown.css';
 
-export default function EntryPage({ params }: { params: { slug: string } }) {
+export default function EntryPage({ params }: { params: { slug: string|null } }) {
     const [editing, setEditing] = useState(false);
     const [entry, setEntry] = useState<Partial<EntryType>>({
         title: '',
