@@ -3,12 +3,7 @@ import EntryList from './EntryList';
 import api from '@helpers/api';
 
 export default async function RecentCreated() {
-    
-    const data = await api.$post('/entries', {
-        orderBy: 'updatedAt',
-        limit: 5,
-        direction: 'desc',
-    });
+    const data = await api.$get('/entry?orderBy=updatedAt&limit=10&direction=desc');
 
     return (
         <div>

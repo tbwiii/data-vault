@@ -22,7 +22,8 @@ export async function createEntry(entry:Partial<EntryType>) {
   if (!entry.slug) {
     entry.slug = slugOMatic(entry.title);
   }
-  return db.insert(entries).values(entry).returning();
+  const data = await db.insert(entries).values(entry).returning();
+  return { entry: data };
 }
 
 export async function getEntryById(entryId:string|number) {
@@ -45,17 +46,19 @@ export async function getEntryBySlug(slug:string) {
 
 export async function getEntreies(
   { limit = 10, orderBy = 'createdAt', offset = 0, direction = 'asc' }
-  :{ limit: number, orderBy: keyof typeof entries, offset: number, direction: 'asc'|'desc' }) {
+  :{ limit?:number, orderBy?: keyof typeof entries, offset?: number, direction?: 'asc'|'desc' }) {
 
   const orderCol = sql`${(entries[orderBy] || entries.createdAt)}`;
 
   const dir = (direction === 'asc') ? asc : desc;
-
-  return db.select()
+  
+  const data = await db.select()
     .from(entries)
     .limit(limit)
     .orderBy(dir(orderCol))
     .offset(offset);
+
+  return { entries: data }; 
 }
 
 export async function updateEntry(entry:Partial<EntryType>) {
@@ -64,7 +67,16 @@ export async function updateEntry(entry:Partial<EntryType>) {
       entry.slug = slugOMatic(entry.title);
     }
     entry.updatedAt = new Date().toISOString();
-    return db.update(entries).set(entry).where(eq(entries.entryId, entry.entryId!)).returning();
+    const data = await db.update(entries).set(entry).where(eq(entries.entryId, entry.entryId!)).returning();
+    // Log the data to check its structure
+    console.log('Updated entry data:', data);
+
+    // Validate the data before returning
+    if (!data || typeof data !== 'object') {
+        throw new Error('Invalid data returned from update operation');
+    }
+
+    return { entry: data[0] };
   } catch (error) {
     console.error(error);
     return error

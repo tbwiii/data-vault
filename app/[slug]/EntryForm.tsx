@@ -5,18 +5,11 @@ import api from '@helpers/api';
 import slugOMatic from '@helpers/slugOMatic';
 
 const saveEntry = async (values:Partial<EntryType>) => {
-    return api.$post('/entries', {
-        orderBy: 'createdAt',
-        limit: 5,
-        direction: 'desc',
-    });
-    return fetch(`/api/entry/${values.entryId ? values.entryId : 'new'}`, { 
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-     });
+    if (!values.entryId) {  
+        return await api.$post('/entry', values);
+    } else {                
+        return await api.$put(`/entry`, values);
+    }
 }
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>
@@ -36,9 +29,9 @@ export default function EntryForm  (
     const submit = async (values: Partial<EntryType>) => {
         setEditing(false);
         try {
-            const res = await saveEntry(values);
-            const { data } =  await res?.json() ?? [];
-            setEntry(data[0]);
+            const data = await saveEntry(values);
+            console.log('res', data);
+            setEntry(data.entry);
         } catch (error) {
             console.error(error);
         }
@@ -92,6 +85,7 @@ export default function EntryForm  (
                     <div className='grid gap-3'>
                         <Title order={3}>Metadata</Title>
                         <TextInput
+                            label="Slug"
                             placeholder={slugPlaceholder}
                             key="slug"
                             {...form.getInputProps('slug')}
