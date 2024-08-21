@@ -2,8 +2,13 @@ const rootUrl = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT
 
 export default {
     $get: async (slug:string) => {
-        const r = await fetch(`${rootUrl}/api${slug}`).then((res) => res.json());
-        return r
+        try{
+            const r = await fetch(`${rootUrl}/api${slug}`).then((res) => res.json());
+            return r
+        } catch(e){
+            console.error(e);
+            return null;
+        }
     },
     $post: async (dest:string, config:{}) => {
         return await (
