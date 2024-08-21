@@ -1,6 +1,6 @@
 export default function relativeTimeOTron(
     timestamp: string,
-    lang = navigator?.language ?? 'en'
+    lang = 'en'
   ): string {
     const date = new Date(timestamp);
     // Allow dates or times to be passed
