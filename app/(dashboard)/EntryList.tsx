@@ -1,4 +1,3 @@
-'use client';
 import Link from 'next/link';
 import { IconClockEdit, IconCalendar, IconNotes } from '@tabler/icons-react';
 import { EntryType } from '@schema/entries';
@@ -16,7 +15,7 @@ const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) 
     return (
       <div className='grid gap-1'>
         {entries.map((entry) => (
-            <Link href={`/${entry.slug}`} key={entry.entryId}>
+            <Link href={`/${entry.slug}`} key={entry.title}>
                 <div className='p-4 rounded
                         bg-neutral-900
                         shadow-md
