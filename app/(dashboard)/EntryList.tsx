@@ -4,7 +4,6 @@ import { IconClockEdit, IconCalendar, IconNotes } from '@tabler/icons-react';
 import { EntryType } from '@schema/entries';
 import relativeTimeOTron from '@util/relativeTimeOTron';
 import { useState, useEffect } from 'react';
-import Entry from '../[slug]/Entry';
 
 interface EntryListProps {
     entries: EntryType[];
