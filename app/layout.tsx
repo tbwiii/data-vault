@@ -17,23 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head>
-        <meta charSet="UTF-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
-        <title>Data Valut</title>
-
-      </head>
+    <html lang="en">
       <body>
-        <ThemeProvider 
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
         <div className="px-8 py-3 bg-sky-950 rounded-lg m-4">
           <Link href="/" className=" flex items-center gap-4">
             <IconBox size={24} />
@@ -41,7 +26,6 @@ export default function RootLayout({
           </Link>
         </div>
           {children}
-        </ThemeProvider>
       </body>
     </html>
   );
