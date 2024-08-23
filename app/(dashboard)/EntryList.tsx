@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { IconClockEdit, IconCalendar, IconNotes } from '@tabler/icons-react';
 import { EntryType } from '@schema/entries';
-import relativeTimeOTron from '@util/relativeTimeOTron';
 
 interface EntryListProps {
     entries: EntryType[];
@@ -37,11 +36,9 @@ const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) 
                     <div className='text-xs text-gray-500'>
                         {createdAt && <span className='flex gap-2 items-center'>
                             <IconCalendar size='16' /> 
-                            {relativeTimeOTron(entry.createdAt!)}
                         </span>}
                         {updatedAt && <span className='flex gap-2 items-center'>
                             <IconClockEdit size='16' />
-                            {relativeTimeOTron(entry.updatedAt!)}
                         </span>}
                     </div>
                 </div>
