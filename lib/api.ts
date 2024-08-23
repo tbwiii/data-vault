@@ -1,6 +1,4 @@
-import { wrap } from 'module';
-
-const rootUrl = process.env.NEXT_PUBLIC_ROOT_DOMAIN ? `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` : 'http://localhost:3000';
+const rootUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 export default {
     $get: (slug:string) => {
