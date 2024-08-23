@@ -4,10 +4,10 @@ type MetadataItemType = {
     label: string;
     value: string | null;
     icon: ReactElement;
-    input: ReactElement | null;
+    input?: ReactElement | null;
 };
 
-const Item = ({ label, value, icon, input }: { label: string, value: string | null, icon: ReactElement, input: ReactElement | null }) => {
+const Item = ({ label, value, icon }: { label: string, value: string | null, icon: ReactElement }) => {
     return (
         <li className='flex gap-2 ms-center items-center'>
             {icon}
