@@ -17,16 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head>
-        <meta charSet="UTF-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
-        <title>Data Valut</title>
-
-      </head>
+    <html lang="en" className="dark" style={{colorScheme: 'dark'}}>
       <body>
         <ThemeProvider 
           attribute="class"
@@ -34,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-        <div className="px-8 py-3 bg-sky-950 rounded-lg m-4">
+        <div className="px-8 py-3 bg-cyan-950 bg-opacity-50 rounded-lg m-4">
           <Link href="/" className=" flex items-center gap-4">
             <IconBox size={24} />
             <span className={`text-lg ${fonts.squada}`}>Data Vault</span>
