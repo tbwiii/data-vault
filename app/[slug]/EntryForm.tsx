@@ -37,14 +37,17 @@ export function EntryFormTitle ({ form }:{ form:any }) {
 export function EntryFormMeta ({ form }:{ form:any }) {
     const slugPlaceholder = slugOMatic(form.values?.title);
     return (
-        <input
-            className='w-full p-4 bg-transparent rounded shadow focus:outline-none'
+        <div className='flex gap-2 items-center grow'>
+            <label>Slug:</label>
+            <input
+            className='w-full p-2 rounded shadow focus:outline-none'
             type="text"
             placeholder={slugPlaceholder}
             key="slug"
             preventDefault
             {...form.getInputProps('slug')}
         />
+        </div>
     )
 }
 

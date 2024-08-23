@@ -7,13 +7,12 @@ type MetadataItemType = {
     input?: ReactElement | null;
 };
 
-const Item = ({ label, value, icon }: { label: string, value: string | null, icon: ReactElement }) => {
+const Item = ({ label, value }: { label: string, value: string | null }) => {
     return (
-        <li className='flex gap-2 ms-center items-center'>
-            {icon}
+        <>
             <div>{label}:</div>
             <div>{value}</div>
-        </li>
+        </>
     );
 }
 
@@ -21,7 +20,10 @@ const Meta = ({ editing, metadataArr, className }: { editing: boolean, metadataA
     return (
         <ul className={`grid gap-4 ${className}`}>
             {metadataArr.map((m: MetadataItemType) => (
-                editing && m.input ? m.input : <Item key={m.label} {...m} />
+                <li className='flex gap-2 ms-center items-center'>
+                    {m.icon}
+                    {editing && m.input ? m.input : <Item key={m.label} {...m} />}
+                </li>
             ))}
         </ul>
     );

@@ -14,7 +14,8 @@ import {
 import {
         EntryForm,
         EntryFormTitle,
-        EntryFormBody} from './EntryForm'
+        EntryFormBody,
+        EntryFormMeta} from './EntryForm'
 import MenuBar from './menu-bar'
 import { MenuButtonType } from './menu-bar';
 import Markdown from 'react-markdown';
@@ -113,7 +114,7 @@ const Entry = (props:EntryPropsType) => {
     const slugPlaceholder = slugOMatic(entryFormObj.values?.title) ?? null;
 
     const metadataArr = [
-        { label: 'Slug', value: entry?.slug ?? slugPlaceholder, icon: <IconLink size="16" /> },
+        { label: 'Slug', value: entry?.slug ?? slugPlaceholder, icon: <IconLink size="16" />, input: <EntryFormMeta form={entryFormObj} /> },
         { label: 'Created', value: relativeTimeOTron(entry?.createdAt) || '--', icon: <IconCalendar size="16" /> },
         { label: 'Updated', value: relativeTimeOTron(entry?.updatedAt) || '--', icon: <IconClockEdit size="16" /> }
     ]
@@ -141,7 +142,11 @@ const Entry = (props:EntryPropsType) => {
                     {metaVisible && (
                         <BlurFade delay={0.15} yOffset={-6} inView>
                             <div className='container m-auto'>
-                                <Meta className="p-8  bg-stone-900 border-stone-400 rounded text-stone-400" metadataArr={metadataArr} />
+                                <Meta 
+                                    className="p-8  bg-stone-900 border-stone-400 rounded text-stone-400" 
+                                    metadataArr={metadataArr} 
+                                    editing={editing}
+                                />
                             </div>
                         </BlurFade>
                     )}
