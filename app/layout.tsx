@@ -25,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-        <div className="px-8 py-3 bg-sky-950 rounded-lg m-4">
+        <div className="px-8 py-3 bg-cyan-950 bg-opacity-50 rounded-lg m-4">
           <Link href="/" className=" flex items-center gap-4">
             <IconBox size={24} />
             <span className={`text-lg ${fonts.squada}`}>Data Vault</span>
