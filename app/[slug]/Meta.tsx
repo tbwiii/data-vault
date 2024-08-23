@@ -19,8 +19,8 @@ const Item = ({ label, value }: { label: string, value: string | null }) => {
 const Meta = ({ editing, metadataArr, className }: { editing: boolean, metadataArr: MetadataItemType[], className: string }) => {
     return (
         <ul className={`grid gap-4 ${className}`}>
-            {metadataArr.map((m: MetadataItemType) => (
-                <li className='flex gap-2 ms-center items-center'>
+            {metadataArr.map((m: MetadataItemType, idx:number) => (
+                <li key={idx} className='flex gap-2 ms-center items-center'>
                     {m.icon}
                     {editing && m.input ? m.input : <Item key={m.label} {...m} />}
                 </li>
