@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import RecentCreated from "./RecentCreated";
 import RecentEdited from "./RecentEdited";
 
