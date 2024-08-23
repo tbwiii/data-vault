@@ -1,6 +1,10 @@
+'use client';
 import Link from 'next/link';
 import { IconClockEdit, IconCalendar, IconNotes } from '@tabler/icons-react';
 import { EntryType } from '@schema/entries';
+import relativeTimeOTron from '@util/relativeTimeOTron';
+import { useState, useEffect } from 'react';
+import Entry from '../[slug]/Entry';
 
 interface EntryListProps {
     entries: EntryType[];
@@ -8,12 +12,23 @@ interface EntryListProps {
     updatedAt?: boolean;
 }
 
-
 const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) => {
+
+    const [hydratedEntries, setHydratedEntries] = useState<EntryType[]>([]);
+
+    useEffect(() => {
+        setHydratedEntries(entries.map((entry:EntryType) => {
+            return {
+                ...entry,
+                createdAt: relativeTimeOTron(entry.createdAt),
+                updatedAt: relativeTimeOTron(entry.updatedAt)
+            }
+        })
+    )})
     
     return (
       <div className='grid gap-1'>
-        {entries.map((entry) => (
+        {hydratedEntries.map((entry:EntryType) => (
             <Link href={`/${entry.slug}`} key={entry.title}>
                 <div className='p-4 rounded
                         bg-neutral-900
@@ -34,11 +49,13 @@ const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) 
                     </span>
                     <h2 className='flex gap-2 items-center group-hover:text-sky-600'><IconNotes size="18" />{entry.title}</h2>
                     <div className='text-xs text-gray-500'>
-                        {createdAt && <span className='flex gap-2 items-center'>
+                        {entry.createdAt && <span className='flex gap-2 items-center'>
                             <IconCalendar size='16' /> 
+                            {entry.createdAt}
                         </span>}
-                        {updatedAt && <span className='flex gap-2 items-center'>
+                        {entry.updatedAt && <span className='flex gap-2 items-center'>
                             <IconClockEdit size='16' />
+                            {entry.updatedAt}
                         </span>}
                     </div>
                 </div>
