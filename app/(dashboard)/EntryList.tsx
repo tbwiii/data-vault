@@ -16,14 +16,14 @@ const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) 
     const [hydratedEntries, setHydratedEntries] = useState<EntryType[]>([]);
 
     useEffect(() => {
-        setHydratedEntries(entries.map((entry:EntryType) => {
+        setHydratedEntries(entries.map((entry: EntryType) => {
             return {
                 ...entry,
                 createdAt: relativeTimeOTron(entry.createdAt),
                 updatedAt: relativeTimeOTron(entry.updatedAt)
-            }
-        })
-    )})
+            };
+        }));
+    }, [entries]);
     
     return (
       <div className='grid gap-1'>
