@@ -1,4 +1,3 @@
-"server only"
 import { NextRequest, NextResponse } from 'next/server';
 import { entries } from '@db';
 
@@ -26,7 +25,7 @@ export const PUT = async (req:Request) => {
 }
 
 export const DELETE = async (req:Request) => {
-    const entry = await req.json();
-    const data = await entries.deleteEntry(entry);
+    const { entryId } = await req.json();
+    const data = await entries.deleteEntry(entryId);
     return NextResponse.json({ data }, { status: 200 });
 }

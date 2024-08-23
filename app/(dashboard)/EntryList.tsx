@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { IconClockEdit, IconCalendar, IconNotes } from '@tabler/icons-react';
 import { EntryType } from '@schema/entries';
-import relativeTimeOTron from '@/helpers/relativeTimeOTron';
+import relativeTimeOTron from '@util/relativeTimeOTron';
 
 interface EntryListProps {
     entries: EntryType[];

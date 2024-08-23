@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import fonts from "@helpers/fonts"
+import fonts from "@util/fonts"
 import { IconBox } from '@tabler/icons-react';
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
 import "./globals.css";
+import { ThemeProvider } from "@components/theme-provider"
 
 
 export const metadata: Metadata = {
@@ -19,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning lang="en">
       <head>
         <meta charSet="UTF-8" />
         <meta
@@ -28,19 +26,22 @@ export default function RootLayout({
         />
         <title>Data Valut</title>
 
-        <ColorSchemeScript />
       </head>
       <body>
-        <div className="px-8 py-3 bg-sky-950">
+        <ThemeProvider 
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+        <div className="px-8 py-3 bg-sky-950 rounded-lg m-4">
           <Link href="/" className=" flex items-center gap-4">
             <IconBox size={24} />
             <span className={`text-lg ${fonts.squada}`}>Data Vault</span>
           </Link>
         </div>
-        <ColorSchemeScript defaultColorScheme="dark" />
-        <MantineProvider defaultColorScheme="dark">
           {children}
-        </MantineProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

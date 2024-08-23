@@ -1,7 +1,8 @@
 import { eq, desc, asc, sql } from "drizzle-orm";
 import { pgTable, serial, text } from "drizzle-orm/pg-core";
 import { db } from "@db";
-import slugOMatic from '@helpers/slugOMatic';
+import slugOMatic from '@util/slugOMatic';
+import blank from "@/lib/util/blank";
 
 export const entries = pgTable('entries', {
   entryId: serial('entry_id').primaryKey(),
@@ -12,7 +13,9 @@ export const entries = pgTable('entries', {
   updatedAt: text('updated_at')
 });
 
+
 export type EntryType = typeof entries.$inferSelect;
+export const newEntry = blank(entries);
 
 export async function createEntry(entry:Partial<EntryType>) {
   const timestamp = new Date().toISOString()

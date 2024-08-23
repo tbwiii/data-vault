@@ -1,7 +1,8 @@
 export default function relativeTimeOTron(
-    timestamp: string,
+    timestamp?: string|null,
     lang = 'en'
   ): string {
+    if (!timestamp) return "";
     const date = new Date(timestamp);
     // Allow dates or times to be passed
     const timeMs = typeof date === "number" ? date : date.getTime();

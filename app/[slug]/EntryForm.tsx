@@ -1,98 +1,73 @@
-import { Button, Card, Title, Textarea, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
+
 import { EntryType } from '@schema/entries';
-import api from '@helpers/api';
-import slugOMatic from '@helpers/slugOMatic';
+import slugOMatic from '@util/slugOMatic';
+import { ReactElement } from 'react';
+import BlurFade from "@/components/magicui/blur-fade";
 
-const saveEntry = async (values:Partial<EntryType>) => {
-    if (!values.entryId) {  
-        return await api.$post('/entry', values);
-    } else {                
-        return await api.$put(`/entry`, values);
-    }
-}
+export const EntryForm = (
+{ children, form, submit }:
+{ children: ReactElement[], form:any, submit:Function}) => ( 
+    <form onSubmit={form.onSubmit((values:Partial<EntryType>) => submit(values))}>
+        {children}
+    </form>
+)
 
-type SetState<T> = React.Dispatch<React.SetStateAction<T>>
-
-export default function EntryForm  (
-    { entry, setEditing, setEntry }
-    :{ 
-        entry: Partial<EntryType>,
-        setEditing: SetState<boolean>,
-        setEntry: SetState<Partial<EntryType>> 
-    }
-) {
-    const form = useForm({
-        initialValues : entry,
-    });
-
-    const submit = async (values: Partial<EntryType>) => {
-        setEditing(false);
-        try {
-            const data = await saveEntry(values);
-            console.log('res', data);
-            setEntry(data.entry);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    const slugPlaceholder = slugOMatic(form.values?.title);
+export function EntryFormTitle ({ form }:{ form:any }) {
 
     return (
-        <form onSubmit={form.onSubmit((values) => submit(values))}>
-            <div className="grid gap-4">
-                <div className="flex">
-                    <TextInput
-                        className='grow'
-                        placeholder='Title'
-                        key="title"
-                        {...form.getInputProps('title')}
-                    />
-                    <div className='flex gap-2'>
-                        <Button
-                            type="submit"
-                            color="blue"
-                            disabled={ !form.isDirty() }
-                        >
-                            Save
-                        </Button>
-                        <Button
-                            type="submit"
-                            color="gray"
-                            onClick={ () => setEditing(false) }
-                        >
-                            Cancel
-                        </Button>
-                    </div>
-                </div>
+        <div className="grid gap-4">
+            <input
+                className='
+                    w-full
+                    text-4xl
+                    p-4
+                    bg-opacity-5
+                    bg-white
+                    rounded
+                    font-bold
+                    focus:outline-none'
+                placeholder='title'
+                key="title"
+                {...form.getInputProps('title')}
+            /> 
+        </div>
+    )
+}
 
-                <div>
-                    <Textarea
-                        variant="unstyled"
-                        placeholder='content'
-                        key="content"
-                        autosize={true}
-                        {...form.getInputProps('body')}
-                    />
-                </div>
+export function EntryFormMeta ({ form }:{ form:any }) {
+    const slugPlaceholder = slugOMatic(form.values?.title);
+    return (
+        <input
+            className='w-full p-4 bg-transparent rounded shadow focus:outline-none'
+            type="text"
+            placeholder={slugPlaceholder}
+            key="slug"
+            preventDefault
+            {...form.getInputProps('slug')}
+        />
+    )
+}
 
-                <Card
-                    shadow="xs"
-                    padding="md"
-                    radius="md"
-                >
-                    <div className='grid gap-3'>
-                        <Title order={3}>Metadata</Title>
-                        <TextInput
-                            label="Slug"
-                            placeholder={slugPlaceholder}
-                            key="slug"
-                            {...form.getInputProps('slug')}
-                        />
-                    </div>
-                </Card>
-            </div>
-        </form>
+export function EntryFormBody (
+    { form, className }:{ className?: string, form:any}
+) {
+
+    return (
+        <div className="grid gap-4">
+                <textarea
+                    className={`
+                        w-full
+                        p-8
+                        bg-transparent
+                        rounded
+                        focus:outline-none
+                        min-h-[calc(100vh-400px)]
+                        ${className}
+                    `}
+                    placeholder='[...]'
+                    key="content"
+                    {...form.getInputProps('body')}
+                /> 
+        </div>
     )
 }
