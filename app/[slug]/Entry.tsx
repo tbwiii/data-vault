@@ -101,7 +101,8 @@ const Entry = (props:EntryPropsType) => {
             icon: IconCancel,
             classes: 'hover:bg-orange-900 hover:text-orange-200',
             visible: editing,
-            onClick: () => setEditing(false)
+            disabled: !entry,
+            onClick: () =>  setEditing(false)
         },
         { 
             label: 'Delete',
