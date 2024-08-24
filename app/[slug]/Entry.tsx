@@ -123,13 +123,10 @@ const Entry = (props:EntryPropsType) => {
     return (
         <div>
             <EntryForm form={entryFormObj} submit={ submit }>
-                <div className='bg-neutral-900 relative flex items-center min-h-48 py-12'>
-                    <div className='container m-auto items-center'>
+                <div className='relative flex items-center min-h-40'>
+                    <div className='container m-auto items-center flex'>
                         { !editing && (
-                            <HyperText
-                                text={entry.title ?? "New Entry"}
-                                className="text-4xl font-bold text-gray-200"
-                            />)
+                            <HyperText text={entry.title ?? "New Entry"} flipCards />)
                         }                       
                         { editing && (
                             <BlurFade delay={0.15} yOffset={-6} inView>
@@ -138,26 +135,48 @@ const Entry = (props:EntryPropsType) => {
                         )}
                     </div>
                 </div>
-                <div className='grid gap-8 mb-8'>
-                    <MenuBar buttons={buttons} />
+                <div className='grid mb-8'>
+                    <div className='container m-auto'>
+                        <div className='rounded bg-azure-700 bg-opacity-30 p-2'>
+                            <MenuBar buttons={buttons} />
+                        </div>
+                    </div>
                     {metaVisible && (
                         <BlurFade delay={0.15} yOffset={-6} inView>
                             <div className='container m-auto'>
-                                <Meta 
-                                    className="p-8  bg-stone-900 border-stone-400 rounded text-stone-400" 
-                                    metadataArr={metadataArr} 
-                                    editing={editing}
-                                />
+                                <div className='relative'>
+                                    <span className='
+                                        bg-gradient-to-r
+                                        from-azure-700
+                                        to-azure-800
+                                        w-full
+                                        h-full
+                                        absolute
+                                        opacity-30
+                                        left-0
+                                        top-[-6px]'></span>
+                                    <Meta 
+                                        className="p-8
+                                        translate-y-[-6px]
+                                        border
+                                        border-dashed
+                                        border-azure-600
+                                        rounded 
+                                        text-white" 
+                                        metadataArr={metadataArr} 
+                                        editing={editing}
+                                    />
+                                </div>
                             </div>
                         </BlurFade>
                     )}
                 </div>
                 <div>
-                    <div className={`container m-auto grid gap-8 py-8 transition-all ${editing ? '' : '-translate-x-1/2' }`}>
+                    <div className={`container m-auto grid gap-8 transition-all ${editing ? '' : '-translate-x-1/2' }`}>
                         <div className='grid gap-10 grid-cols-2'>
                             <EntryFormBody className={`bg-white bg-opacity-5  ${editing ? '' : 'opacity-0' }`} form={entryFormObj} />
                             <Markdown 
-                                className='markdown-body text-gray-200'
+                                className='markdown-body text-gray-200 px-4'
                                 remarkPlugins={[remarkGfm]}
                             >
                                 { entryFormObj.values.body }

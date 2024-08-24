@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import extraColors from './lib/config/tailwind.extracolors'
 
 const config = {
   darkMode: ["class"],
@@ -32,6 +33,9 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      colors: {
+        ...extraColors,
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import fonts from "@util/fonts";
 
 import { cn } from "@/lib/utils";
 
 interface HyperTextProps {
   text: string;
   duration?: number;
+  flipCards?: boolean;
   framerProps?: Variants;
   className?: string;
   animateOnLoad?: boolean;
@@ -20,6 +22,7 @@ const getRandomInt = (max: number) => Math.floor(Math.random() * max);
 export default function HyperText({
   text,
   duration = 800,
+  flipCards = false,
   framerProps = {
     initial: { opacity: 0, y: -10 },
     animate: { opacity: 1, y: 0 },
@@ -70,17 +73,43 @@ export default function HyperText({
 
   return (
     <div
-      className="overflow-hidden py-2 flex cursor-default scale-100"
+      className="overflow-hidden py-2 flex flex-wrap cursor-default scale-100"
       onMouseEnter={triggerAnimation}
     >
       <AnimatePresence mode="wait">
         {displayText.map((letter, i) => (
           <motion.h1
             key={i}
-            className={cn("font-mono", letter === " " ? "w-3" : "", className)}
+            className={cn(
+              "font-mono relative",
+              letter === " " ? "w-3" : "",
+              flipCards ? `
+                ${fonts.cutive}
+                text-5xl
+                w-12
+                font-bold
+                text-azure-500
+                text-center
+                py-2
+                mx-[2px]
+                bg-gradient-to-br
+                from-stone-800
+                to-stone-900
+                rounded`
+                : "",
+              className)}
             {...framerProps}
           >
-            {letter.toUpperCase()}
+            <span className="absolute
+            bg-stone-900
+            w-full
+            h-0.5
+            shadow-md
+            left-0
+            top-1/2
+            translate-y-[-50%]
+            "></span>
+            <span className="relative z-10">{letter.toUpperCase()}</span>
           </motion.h1>
         ))}
       </AnimatePresence>
