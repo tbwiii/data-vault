@@ -63,6 +63,10 @@ const Entry = (props:EntryPropsType) => {
         initialValues : props.entry?.entryId ? entry : { title: props.inferredTitle, body: ''},
     });
 
+    if (entryFormObj.values?.title === 'new') {
+        entryFormObj.values.title = ''
+    }
+
     const submit = async (values: Partial<EntryType>) => {
         try {
             const { entry } = await saveEntry(values);

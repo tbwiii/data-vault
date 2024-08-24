@@ -65,6 +65,7 @@ export function EntryFormBody (
                         rounded
                         focus:outline-none
                         min-h-[calc(100vh-400px)]
+                        overflow-auto
                         ${className}
                     `}
                     placeholder='[...]'

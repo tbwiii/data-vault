@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import fonts from "@util/fonts"
-import { IconCode } from '@tabler/icons-react';
 import "./globals.css";
-import { ThemeProvider } from "@components/theme-provider"
-
+import { ThemeProvider } from "@components/theme-provider";
+import Sidebar from "@/components/sidebar";
 
 export const metadata: Metadata = {
   title: "Data Vault",
@@ -17,25 +14,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" style={{colorScheme: 'dark'}}>
+    <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
       <body>
-        <ThemeProvider 
+        <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
           <div className="flex min-h-screen">
-            <div className="px-8 py-3 bg-stone-900 relative z-10 min-w-64 w-[20%]">
-              <Link href="/" className=" flex items-center gap-2 text-azure-100">
-                <IconCode size={32} />
-                <span className={`text-xl ${fonts.cutive}`}>Data Vault</span>
-              </Link>
+            <Sidebar />
+              <main id="main" className="grow">
+                {children}
+              </main>
             </div>
-            <main id="main" className="grow">
-              {children}
-            </main>
-          </div>
         </ThemeProvider>
       </body>
     </html>
