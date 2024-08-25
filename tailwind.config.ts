@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+import { Config } from 'tailwindcss';
 import extraColors from './lib/config/tailwind.extracolors'
+import plugin from 'tailwindcss-animate';
 
 const config = {
   darkMode: ["class"],
