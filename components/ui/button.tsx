@@ -39,7 +39,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
     asChild?: boolean
-    variant?: "bright" | "destructive" | "outline" | "default" | "ghost" | "link",
+    variant?: "default" | "destructive" | "outline" | "dull" | "ghost" | "link",
     size?: "default" | "sm" | "lg" | "icon",
 }
 
