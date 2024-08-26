@@ -1,16 +1,13 @@
-import 'dotenv/config'
+import "dotenv/config";
 
-import { drizzle } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
-import * as entries from '@schema/entries';
-
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import * as entries from "@schema/entries";
 
 const connectionString = process.env.DB_URL!;
 
 // Disable prefetch as it is not supported for "Transaction" pool mode
-export const client = postgres(connectionString, { prepare: false })
+export const client = postgres(connectionString, { prepare: false });
 export const db = drizzle(client);
 
-export {
-    entries,
-}
+export { entries };

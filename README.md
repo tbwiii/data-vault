@@ -1,6 +1,5 @@
 [vault.ted.codes](https://vault.ted.codes)
 
-
 ## Getting Started
 
 ```bash
