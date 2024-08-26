@@ -21,7 +21,6 @@ import { MenuButtonType } from './menu-bar';
 import Markdown from 'react-markdown';
 import BlurFade from "@/components/magicui/blur-fade";
 import HyperText from "@/components/magicui/hyper-text";
-import relativeTimeOTron from "@util/relativeTimeOTron";
 import slugOMatic from "@util/slugOMatic";
 import Meta from './Meta'
 import remarkGfm from 'remark-gfm';
@@ -123,15 +122,15 @@ const Entry = (props:EntryPropsType) => {
 
     const metadataArr = [
         { label: 'Slug', value: entry?.slug ?? slugPlaceholder, icon: <IconLink size="16" />, input: <EntryFormMeta form={entryFormObj} /> },
-        { label: 'Created', value: relativeTimeOTron(entry?.createdAt) || '--', icon: <IconCalendar size="16" /> },
-        { label: 'Updated', value: relativeTimeOTron(entry?.updatedAt) || '--', icon: <IconClockEdit size="16" /> }
+        { label: 'Created', value: entry?.createdAt|| '--', icon: <IconCalendar size="16" /> },
+        { label: 'Updated', value: entry?.updatedAt || '--', icon: <IconClockEdit size="16" /> }
     ]
 
     return (
         <div>
             <EntryForm form={entryFormObj} submit={ submit }>
                 <div className='relative flex items-center min-h-40'>
-                    <div className='container m-auto items-center flex'>
+                    <div className='container m-auto '>
                         { !editing && (
                             <HyperText text={entry.title ?? "New Entry"} flipCards />)
                         }                       

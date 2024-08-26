@@ -4,7 +4,6 @@ import {Card, CardHeader, CardTitle, CardContent} from '@components/ui/card';
 import { Pencil2Icon, CalendarIcon, FileTextIcon } from '@radix-ui/react-icons'
 
 import { EntryType } from '@schema/entries';
-import relativeTimeOTron from '@util/relativeTimeOTron';
 import { useState, useEffect } from 'react';
 
 interface EntryListProps {
@@ -21,8 +20,8 @@ const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) 
         setHydratedEntries(entries.map((entry: EntryType) => {
             return {
                 ...entry,
-                createdAt: relativeTimeOTron(entry.createdAt),
-                updatedAt: relativeTimeOTron(entry.updatedAt)
+                createdAt: entry.createdAt,
+                updatedAt: entry.updatedAt,
             };
         }));
     }, [entries]);

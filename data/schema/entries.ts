@@ -2,8 +2,8 @@ import { eq, desc, asc, sql } from "drizzle-orm";
 import { boolean, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { db } from "@db";
 import slugOMatic from '@util/slugOMatic';
+import relativeTimeOTron from "@/lib/util/relativeTimeOTron";
 import blank from "@/lib/util/blank";
-import { format } from "path";
 
 export const entries = pgTable('entries', {
   entryId: serial('entry_id').primaryKey(),
@@ -42,6 +42,14 @@ export const getEntriesColumn = (key:string) => {
 
 export type EntryType = typeof entries.$inferSelect;
 export const newEntry = blank(entries);
+         
+function humanizeTimestamps(entries:EntryType[]) {
+  return entries.map((entry:EntryType) => {
+    entry.createdAt = relativeTimeOTron(entry.createdAt);
+    entry.updatedAt = relativeTimeOTron(entry.updatedAt);
+    return entry;
+  });
+}
 
 export async function createEntry(entry:Partial<EntryType>) {
   const timestamp = new Date().toISOString()
@@ -52,16 +60,17 @@ export async function createEntry(entry:Partial<EntryType>) {
     entry.slug = slugOMatic(entry.title);
   }
   const data = await db.insert(entries).values(entry).returning();
+
   return { entry: data };
 }
 
 export async function getEntryById(entryId:string|number) {
-  const query = await db.select()
+  const data = await db.select()
     .from(entries)
     .where(eq(entries.entryId, Number(entryId)))
     .limit(1);
 
-  return (query[0]);
+  return (humanizeTimestamps(data)[0]);
 }
 
 export async function getEntryBySlug(slug:string) {
@@ -70,10 +79,10 @@ export async function getEntryBySlug(slug:string) {
     .where(eq(entries.slug, slug))
     .limit(1);
 
-  return (query[0]);
+  return (humanizeTimestamps(query)[0]);
 }
 
-// Todo: put in helper file and expand
+// Todo: expand to build helper query and move to helper/util
 function whereBuilder(table:any, where:Partial<EntryType>) {
   const keys = Object.keys(where);
   let query = sql``;
@@ -97,7 +106,7 @@ export async function getEntreies(
     .orderBy(dir(orderCol))
     .offset(offset);
 
-  return { entries: data }; 
+  return { entries: humanizeTimestamps(data) }; 
 }
 
 export async function updateEntry(entry:Partial<EntryType>) {
@@ -115,7 +124,7 @@ export async function updateEntry(entry:Partial<EntryType>) {
         throw new Error('Invalid data returned from update operation');
     }
 
-    return { entry: data[0] };
+    return { entry: humanizeTimestamps(data)[0] };
   } catch (error) {
     console.error(error);
     return error

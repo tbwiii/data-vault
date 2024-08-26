@@ -15,7 +15,7 @@ export const EntryForm = (
 export function EntryFormTitle ({ form }:{ form:any }) {
 
     return (
-        <div className="grid gap-4">
+        <div className="">
             <input
                 className='
                     w-full
