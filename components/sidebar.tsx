@@ -7,6 +7,7 @@ import {
   IconLayoutDashboard,
   IconFilePlus,
   IconListDetails,
+  IconLogin,
 } from "@tabler/icons-react";
 
 async function User() {
@@ -38,7 +39,7 @@ async function User() {
       {!user && (
         <Link href="/login" className="flex flex-center">
           <Button>
-            <EnterIcon />
+            <IconLogin />
             Sign In
           </Button>
         </Link>
