@@ -21,15 +21,16 @@ import { MenuButtonType } from './menu-bar';
 import Markdown from 'react-markdown';
 import BlurFade from "@/components/magicui/blur-fade";
 import HyperText from "@/components/magicui/hyper-text";
-import relativeTimeOTron from "@util/relativeTimeOTron";
 import slugOMatic from "@util/slugOMatic";
 import Meta from './Meta'
 import remarkGfm from 'remark-gfm';
 import api from '@lib/api';
+import { User } from 'next-auth';
 
 type EntryPropsType = {
     entry: EntryType;
     inferredTitle: string;
+    user?: User;
 }
 
 const confirmDelete = async (entryId:number) => {    
@@ -47,6 +48,7 @@ const confirmDelete = async (entryId:number) => {
 }
 
 const Entry = (props:EntryPropsType) => {
+
     const [editing, setEditing] = useState(!props.entry?.entryId);
     const [metaVisible, setMetaVisible] = useState(false);
     const [entry, setEntry] = useState(props.entry);
@@ -60,8 +62,12 @@ const Entry = (props:EntryPropsType) => {
     }
     
     const entryFormObj = useForm({
-        initialValues : props.entry?.entryId ? entry : { title: props.inferredTitle, body: ''},
+        initialValues : props.entry?.entryId ? entry : { title: props.inferredTitle, body: '', owner: props.user?.email ?? null},
     });
+
+    if (entryFormObj.values?.title === 'new') {
+        entryFormObj.values.title = ''
+    }
 
     const submit = async (values: Partial<EntryType>) => {
         try {
@@ -78,15 +84,15 @@ const Entry = (props:EntryPropsType) => {
             label: 'Edit',
             icon: IconEdit,
             classes: 'hover:bg-sky-900 hover:text-sky-200',
-            visible: !editing,
+            visible: !editing && props.user?.email === entry.owner,
             onClick: () => setEditing(true)
         },
         { 
-            label: 'Save',
+            label: props.user ? 'Save' : 'Login to Save',
             icon: IconDeviceFloppy,
             classes: 'hover:bg-sky-900 hover:text-sky-200',
             visible: editing,
-            disabled: !entryFormObj.isDirty(),
+            disabled: !entryFormObj.isDirty() || !props.user,
             type: 'submit'
         },
         { 
@@ -116,20 +122,17 @@ const Entry = (props:EntryPropsType) => {
 
     const metadataArr = [
         { label: 'Slug', value: entry?.slug ?? slugPlaceholder, icon: <IconLink size="16" />, input: <EntryFormMeta form={entryFormObj} /> },
-        { label: 'Created', value: relativeTimeOTron(entry?.createdAt) || '--', icon: <IconCalendar size="16" /> },
-        { label: 'Updated', value: relativeTimeOTron(entry?.updatedAt) || '--', icon: <IconClockEdit size="16" /> }
+        { label: 'Created', value: entry?.createdAt|| '--', icon: <IconCalendar size="16" /> },
+        { label: 'Updated', value: entry?.updatedAt || '--', icon: <IconClockEdit size="16" /> }
     ]
 
     return (
         <div>
             <EntryForm form={entryFormObj} submit={ submit }>
-                <div className='bg-neutral-900 relative flex items-center min-h-48 py-12'>
-                    <div className='container m-auto items-center'>
+                <div className='relative flex items-center min-h-40'>
+                    <div className='container m-auto '>
                         { !editing && (
-                            <HyperText
-                                text={entry.title ?? "New Entry"}
-                                className="text-4xl font-bold text-gray-200"
-                            />)
+                            <HyperText text={entry.title ?? "New Entry"} flipCards />)
                         }                       
                         { editing && (
                             <BlurFade delay={0.15} yOffset={-6} inView>
@@ -138,26 +141,48 @@ const Entry = (props:EntryPropsType) => {
                         )}
                     </div>
                 </div>
-                <div className='grid gap-8 mb-8'>
-                    <MenuBar buttons={buttons} />
+                <div className='grid mb-8'>
+                    <div className='container m-auto'>
+                        <div className='rounded bg-azure-700 bg-opacity-30 p-2'>
+                            <MenuBar buttons={buttons} />
+                        </div>
+                    </div>
                     {metaVisible && (
                         <BlurFade delay={0.15} yOffset={-6} inView>
                             <div className='container m-auto'>
-                                <Meta 
-                                    className="p-8  bg-stone-900 border-stone-400 rounded text-stone-400" 
-                                    metadataArr={metadataArr} 
-                                    editing={editing}
-                                />
+                                <div className='relative'>
+                                    <span className='
+                                        bg-gradient-to-r
+                                        from-azure-700
+                                        to-azure-800
+                                        w-full
+                                        h-full
+                                        absolute
+                                        opacity-30
+                                        left-0
+                                        top-[-6px]'></span>
+                                    <Meta 
+                                        className="p-8
+                                        translate-y-[-6px]
+                                        border
+                                        border-dashed
+                                        border-azure-600
+                                        rounded 
+                                        text-white" 
+                                        metadataArr={metadataArr} 
+                                        editing={editing}
+                                    />
+                                </div>
                             </div>
                         </BlurFade>
                     )}
                 </div>
                 <div>
-                    <div className={`container m-auto grid gap-8 py-8 transition-all ${editing ? '' : '-translate-x-1/2' }`}>
+                    <div className={`container m-auto grid gap-8 transition-all ${editing ? '' : '-translate-x-1/2' }`}>
                         <div className='grid gap-10 grid-cols-2'>
                             <EntryFormBody className={`bg-white bg-opacity-5  ${editing ? '' : 'opacity-0' }`} form={entryFormObj} />
                             <Markdown 
-                                className='markdown-body text-gray-200'
+                                className='markdown-body text-gray-200 px-4'
                                 remarkPlugins={[remarkGfm]}
                             >
                                 { entryFormObj.values.body }

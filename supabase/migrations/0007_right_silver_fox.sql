@@ -1,0 +1,1 @@
+ALTER TABLE "entries" ADD COLUMN "deleted" boolean DEFAULT false;

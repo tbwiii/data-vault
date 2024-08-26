@@ -1,8 +1,10 @@
 'use client';
 import Link from 'next/link';
-import { IconClockEdit, IconCalendar, IconNotes } from '@tabler/icons-react';
+import {Card, CardHeader, CardTitle, CardContent} from '@components/ui/card';
+import { Pencil2Icon, CalendarIcon, FileTextIcon } from '@radix-ui/react-icons'
+
 import { EntryType } from '@schema/entries';
-import relativeTimeOTron from '@util/relativeTimeOTron';
+import { useState, useEffect } from 'react';
 
 interface EntryListProps {
     entries: EntryType[];
@@ -10,42 +12,49 @@ interface EntryListProps {
     updatedAt?: boolean;
 }
 
-
 const EntryList: React.FC<EntryListProps> = ({ entries, createdAt, updatedAt }) => {
+
+    const [hydratedEntries, setHydratedEntries] = useState<EntryType[]>([]);
+
+    useEffect(() => {
+        setHydratedEntries(entries.map((entry: EntryType) => {
+            return {
+                ...entry,
+                createdAt: entry.createdAt,
+                updatedAt: entry.updatedAt,
+            };
+        }));
+    }, [entries]);
     
     return (
       <div className='grid gap-1'>
-        {entries.map((entry) => (
-            <Link href={`/${entry.slug}`} key={entry.entryId}>
-                <div className='p-4 rounded
-                        bg-neutral-900
-                        shadow-md
-                        group
-                        relative
-                        grid gap-2'
-                >
-                    <span className='absolute
-                        bottom-0
-                        left-0
-                        w-0
-                        h-0.5
-                        bg-sky-700
-                        group-hover:w-full
-                        transition-all'
-                    >
-                    </span>
-                    <h2 className='flex gap-2 items-center group-hover:text-sky-600'><IconNotes size="18" />{entry.title}</h2>
-                    <div className='text-xs text-gray-500'>
-                        {createdAt && <span className='flex gap-2 items-center'>
-                            <IconCalendar size='16' /> 
-                            {relativeTimeOTron(entry.createdAt!)}
+        {hydratedEntries.map((entry:EntryType) => (
+            <Link href={`/${entry.slug}`} key={entry.title}>
+                <Card className='group relative px-3 py-3 grid gap-2 overflow-hidden'>
+                    <CardTitle>
+                        <FileTextIcon />{entry.title}
+                    </CardTitle>
+                    <div className=' flex gap-3 text-xs'>
+                        {entry.createdAt && <span className='flex gap-2 items-center'>
+                            <CalendarIcon /> 
+                            {entry.createdAt}
                         </span>}
-                        {updatedAt && <span className='flex gap-2 items-center'>
-                            <IconClockEdit size='16' />
-                            {relativeTimeOTron(entry.updatedAt!)}
+                        {entry.updatedAt && <span className='flex gap-2 items-center'>
+                            <Pencil2Icon />
+                            {entry.updatedAt}
                         </span>}
                     </div>
-                </div>
+                    <span className='absolute
+                            bottom-0
+                            left-0
+                            w-0
+                            h-0.5
+                            bg-azure-700
+                            group-hover:w-full
+                            transition-all'
+                        >
+                        </span>
+                </Card>
             </Link>
         ))}
       </div>
