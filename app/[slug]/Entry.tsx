@@ -91,7 +91,7 @@ const Entry = (props: EntryPropsType) => {
       label: "Edit",
       icon: IconEdit,
       classes: "hover:bg-sky-900 hover:text-sky-200",
-      visible: !editing && props.user?.email === entry.owner,
+      visible: !editing && props.user?.email === entry?.owner,
       onClick: () => setEditing(true),
     },
     {

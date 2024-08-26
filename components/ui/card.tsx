@@ -17,10 +17,7 @@ const Card = React.forwardRef<
       text-
       shadow
       dark:border-neutral-800
-      dark:bg-transparent
-      hover:dark:bg-azure-500
-      hover:dark:bg-opacity-5
-      dark:text-azure-600`,
+      dark:bg-transparent`,
       className,
     )}
     {...props}

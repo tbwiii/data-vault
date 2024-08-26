@@ -2,12 +2,12 @@ import Link from "next/link";
 import { Button } from "@components/ui/button";
 import fonts from "@util/fonts";
 import { signOut, auth } from "@lib/auth";
+
 import {
-  EnterIcon,
-  DashboardIcon,
-  FileTextIcon,
-  FilePlusIcon,
-} from "@radix-ui/react-icons";
+  IconLayoutDashboard,
+  IconFilePlus,
+  IconListDetails,
+} from "@tabler/icons-react";
 
 async function User() {
   let session = await auth();
@@ -48,13 +48,13 @@ async function User() {
 }
 
 const menuItems = [
-  { label: "Dashboard", icon: <DashboardIcon />, href: "/" },
-  { label: "Entries", icon: <FileTextIcon />, href: "/entries" },
-  { label: "New", icon: <FilePlusIcon />, href: "/new" },
-  // { label: 'Settings', icon: CodeIcon, href: '/settings' },
-  // { label: 'Users', icon: CodeIcon, href: '/users' },
-  // { label: 'Roles', icon: CodeIcon, href: '/roles' },
-  // { label: 'Permissions', icon: CodeIcon, href: '/permissions' },
+  { label: "Dashboard", icon: <IconLayoutDashboard />, href: "/" },
+  { label: "Entries", icon: <IconListDetails />, href: "/entries" },
+  { label: "New", icon: <IconFilePlus />, href: "/new" },
+  // { label: 'Settings', icon: null href: '/settings' },
+  // { label: 'Users', icon: null href: '/users' },
+  // { label: 'Roles', icon: null href: '/roles' },
+  // { label: 'Permissions', icon: null href: '/permissions' },
 ];
 
 const MenuItem = ({

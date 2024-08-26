@@ -27,6 +27,7 @@ export const POST = async (req: Request) => {
 
 export const PUT = async (req: Request) => {
   const entry = await req.json();
+  delete entry.createdAt;
   const data = await entries.updateEntry(entry);
   return NextResponse.json(data, { status: 200 });
 };

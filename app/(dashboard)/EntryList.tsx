@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent } from "@components/ui/card";
 import { Pencil2Icon, CalendarIcon, FileTextIcon } from "@radix-ui/react-icons";
 
 import { EntryType } from "@schema/entries";
@@ -27,7 +26,7 @@ const EntryList: React.FC<EntryListProps> = ({
           createdAt: entry.createdAt,
           updatedAt: entry.updatedAt,
         };
-      }),
+      })
     );
   }, [entries]);
 
@@ -35,11 +34,22 @@ const EntryList: React.FC<EntryListProps> = ({
     <div className="grid gap-1">
       {hydratedEntries.map((entry: EntryType) => (
         <Link href={`/${entry.slug}`} key={entry.title}>
-          <Card className="group relative px-3 py-3 grid gap-2 overflow-hidden">
-            <CardTitle>
+          <div
+            className="
+              hover:dark:bg-azure-500
+              hover:dark:bg-opacity-5
+            dark:text-azure-600
+              relative
+              px-3
+              py-3
+              grid
+              gap-2
+              overflow-hidden"
+          >
+            <div className="flex gap-2 items-center">
               <FileTextIcon />
               {entry.title}
-            </CardTitle>
+            </div>
             <div className=" flex gap-3 text-xs">
               {entry.createdAt && (
                 <span className="flex gap-2 items-center">
@@ -64,7 +74,7 @@ const EntryList: React.FC<EntryListProps> = ({
                             group-hover:w-full
                             transition-all"
             ></span>
-          </Card>
+          </div>
         </Link>
       ))}
     </div>
