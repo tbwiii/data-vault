@@ -1,18 +1,13 @@
+# Data Vault
+
 [vault.ted.codes](https://vault.ted.codes)
 
-## Getting Started
+[working todo list](https://vault.ted.codes/todo)
 
-```bash
-pnpm i
-```
+## Docs
 
-First, run the development server:
-
-```bash
-pnpm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-[Mantime](https://mantine.dev/getting-started/)
+[NextJs](https://nextjs.org/docs)
+[shadcn](https://ui.shadcn.com/docs/components/accordion)
+[Magic UI](https://magicui.design/docs/components/marquee)
+[AuthJS](authjs.dev/getting-started/)
 [Drizzle ORM & Migrations](https://orm.drizzle.team/learn/tutorials/drizzle-with-supabase)
