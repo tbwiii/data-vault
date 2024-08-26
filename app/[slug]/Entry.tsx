@@ -30,6 +30,11 @@ import api from '@lib/api';
 type EntryPropsType = {
     entry: EntryType;
     inferredTitle: string;
+    owner: string;
+    private: boolean
+    user: {
+        email: string;
+    }
 }
 
 const confirmDelete = async (entryId:number) => {    
@@ -47,6 +52,7 @@ const confirmDelete = async (entryId:number) => {
 }
 
 const Entry = (props:EntryPropsType) => {
+
     const [editing, setEditing] = useState(!props.entry?.entryId);
     const [metaVisible, setMetaVisible] = useState(false);
     const [entry, setEntry] = useState(props.entry);
@@ -60,7 +66,7 @@ const Entry = (props:EntryPropsType) => {
     }
     
     const entryFormObj = useForm({
-        initialValues : props.entry?.entryId ? entry : { title: props.inferredTitle, body: ''},
+        initialValues : props.entry?.entryId ? entry : { title: props.inferredTitle, body: '', owner: props.user?.email ?? null},
     });
 
     if (entryFormObj.values?.title === 'new') {
@@ -82,15 +88,15 @@ const Entry = (props:EntryPropsType) => {
             label: 'Edit',
             icon: IconEdit,
             classes: 'hover:bg-sky-900 hover:text-sky-200',
-            visible: !editing,
+            visible: !editing && props.user?.email === entry.owner,
             onClick: () => setEditing(true)
         },
         { 
-            label: 'Save',
+            label: props.user ? 'Save' : 'Login to Save',
             icon: IconDeviceFloppy,
             classes: 'hover:bg-sky-900 hover:text-sky-200',
             visible: editing,
-            disabled: !entryFormObj.isDirty(),
+            disabled: !entryFormObj.isDirty() || !props.user,
             type: 'submit'
         },
         { 

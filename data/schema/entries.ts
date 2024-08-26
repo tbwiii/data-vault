@@ -1,18 +1,44 @@
 import { eq, desc, asc, sql } from "drizzle-orm";
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { boolean, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { db } from "@db";
 import slugOMatic from '@util/slugOMatic';
 import blank from "@/lib/util/blank";
+import { format } from "path";
 
 export const entries = pgTable('entries', {
   entryId: serial('entry_id').primaryKey(),
   title: text('title'),
   body: text('body'),
   slug: text('slug'),
+  owner: text('owner'),
+  private: boolean('private').default(true),
+  deleted: boolean('deleted').default(false),
   createdAt: text('created_at'),
   updatedAt: text('updated_at')
 });
 
+export const getEntriesColumn = (key:string) => {
+  switch (key) {
+    case 'entryId':
+      return entries.entryId;
+    case 'title':
+      return entries.title;
+    case 'body':
+      return entries.body;
+    case 'slug':
+      return entries.slug;
+    case 'owner':
+      return entries.owner;
+    case 'private':
+      return entries.private;
+    case 'createdAt':
+      return entries.createdAt;
+    case 'updatedAt':
+      return entries.updatedAt;
+    default:
+      console.error('Invalid column name: ', key);
+  }
+}
 
 export type EntryType = typeof entries.$inferSelect;
 export const newEntry = blank(entries);
@@ -47,9 +73,18 @@ export async function getEntryBySlug(slug:string) {
   return (query[0]);
 }
 
+// Todo: put in helper file and expand
+function whereBuilder(table:any, where:Partial<EntryType>) {
+  const keys = Object.keys(where);
+  let query = sql``;
+  
+  // return query;
+  return eq(entries.deleted, false);
+}
+
 export async function getEntreies(
-  { limit = 10, orderBy = 'createdAt', offset = 0, direction = 'asc' }
-  :{ limit?:number, orderBy?: keyof typeof entries, offset?: number, direction?: 'asc'|'desc' }) {
+  { limit = 10, orderBy = 'createdAt', offset = 0, direction = 'asc', where = {} }
+  :{ limit?:number, orderBy?: keyof typeof entries, offset?: number, direction?: 'asc'|'desc', where?: Partial<EntryType> }) {
 
   const orderCol = sql`${(entries[orderBy] || entries.createdAt)}`;
 
@@ -58,6 +93,7 @@ export async function getEntreies(
   const data = await db.select()
     .from(entries)
     .limit(limit)
+    .where(whereBuilder(entries, where))
     .orderBy(dir(orderCol))
     .offset(offset);
 

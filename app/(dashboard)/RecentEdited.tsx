@@ -3,7 +3,7 @@ import { getEntreies } from '@schema/entries';
 import EntryList from './EntryList';
 
 export default async function RecentCreated() {
-    const { entries } = await getEntreies({ orderBy: 'updatedAt', limit: 10, direction: 'desc' });
+    const { entries } = await getEntreies({ orderBy: 'updatedAt', limit: 10, direction: 'desc', where: { private: false } });
 
     return (
         <div>

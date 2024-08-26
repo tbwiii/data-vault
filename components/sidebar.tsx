@@ -45,7 +45,7 @@ async function User() {
 
 const menuItems = [
     { label: 'Dashboard', icon: <DashboardIcon />, href: '/' },
-    { label: 'Entries', icon: <FileTextIcon />, href: '/entries' },
+    // { label: 'Entries', icon: <FileTextIcon />, href: '/entries' },
     { label: 'New', icon: <FilePlusIcon />, href: '/new' },
     // { label: 'Settings', icon: CodeIcon, href: '/settings' },
     // { label: 'Users', icon: CodeIcon, href: '/users' },
@@ -73,7 +73,6 @@ export function Menu() {
         </div>
     )
 }
-
 
 export default function Sidebar() {
 
