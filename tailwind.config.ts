@@ -1,6 +1,6 @@
-import { Config } from 'tailwindcss';
-import extraColors from './lib/config/tailwind.extracolors'
-import plugin from 'tailwindcss-animate';
+import { Config } from "tailwindcss";
+import extraColors from "./lib/config/tailwind.extracolors";
+import plugin from "tailwindcss-animate";
 
 const config = {
   darkMode: ["class"],
@@ -35,10 +35,10 @@ const config = {
       },
       colors: {
         ...extraColors,
-      }
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

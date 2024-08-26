@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 a {
-    color: theme('colors.azure[500]');
+  color: theme("colors.azure[500]");
 }
-  

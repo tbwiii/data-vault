@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
+    <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
       <body>
         <ThemeProvider
           attribute="class"
@@ -24,10 +24,10 @@ export default function RootLayout({
         >
           <div className="flex min-h-screen">
             <Sidebar />
-              <main id="main" className="grow">
-                {children}
-              </main>
-            </div>
+            <main id="main" className="grow">
+              {children}
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>

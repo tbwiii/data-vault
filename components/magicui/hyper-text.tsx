@@ -83,7 +83,8 @@ export default function HyperText({
             className={cn(
               "font-mono relative",
               letter === " " ? "w-3" : "",
-              flipCards ? `
+              flipCards
+                ? `
                 ${fonts.cutive}
                 text-5xl
                 w-12
@@ -97,10 +98,12 @@ export default function HyperText({
                 to-stone-900
                 rounded`
                 : "",
-              className)}
+              className,
+            )}
             {...framerProps}
           >
-            <span className="absolute
+            <span
+              className="absolute
             bg-stone-900
             w-full
             h-0.5
@@ -108,7 +111,8 @@ export default function HyperText({
             left-0
             top-1/2
             translate-y-[-50%]
-            "></span>
+            "
+            ></span>
             <span className="relative z-10">{letter.toUpperCase()}</span>
           </motion.h1>
         ))}
