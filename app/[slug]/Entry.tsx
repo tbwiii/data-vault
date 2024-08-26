@@ -32,9 +32,9 @@ type EntryPropsType = {
     inferredTitle: string;
     owner: string;
     private: boolean
-    user: {
+    user?: Partial<{
         email: string;
-    }
+    }>
 }
 
 const confirmDelete = async (entryId:number) => {    
