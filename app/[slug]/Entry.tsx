@@ -29,7 +29,7 @@ import api from '@lib/api';
 import { User } from 'next-auth';
 
 type EntryPropsType = {
-    entry: Partial<EntryType>;
+    entry: EntryType;
     inferredTitle: string;
     user?: User;
 }
