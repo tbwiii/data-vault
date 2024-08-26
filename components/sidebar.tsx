@@ -3,7 +3,6 @@ import { Button } from "@components/ui/button";
 import fonts from "@util/fonts";
 import { signOut, auth } from "@lib/auth";
 import {
-  CodeIcon,
   EnterIcon,
   DashboardIcon,
   FileTextIcon,
