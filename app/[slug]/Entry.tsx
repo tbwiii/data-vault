@@ -26,15 +26,12 @@ import slugOMatic from "@util/slugOMatic";
 import Meta from './Meta'
 import remarkGfm from 'remark-gfm';
 import api from '@lib/api';
+import { User } from 'next-auth';
 
 type EntryPropsType = {
-    entry: EntryType;
+    entry: Partial<EntryType>;
     inferredTitle: string;
-    owner: string;
-    private: boolean
-    user?: Partial<{
-        email: string;
-    }>
+    user?: User;
 }
 
 const confirmDelete = async (entryId:number) => {    
