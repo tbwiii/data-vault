@@ -2,7 +2,13 @@ import { Suspense } from "react";
 import { getEntreies } from "@schema/entries";
 import EntryList from "./EntryList";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardHeader, CardTitle, CardFooter, CardContent } from '@components/ui/card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+  CardContent,
+} from "@components/ui/card";
 
 export default async function RecentCreated() {
   const { entries } = await getEntreies({

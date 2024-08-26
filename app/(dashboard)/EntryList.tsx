@@ -26,7 +26,7 @@ const EntryList: React.FC<EntryListProps> = ({
           createdAt: entry.createdAt,
           updatedAt: entry.updatedAt,
         };
-      })
+      }),
     );
   }, [entries]);
 
