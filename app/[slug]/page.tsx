@@ -13,7 +13,7 @@ export default async function EntryPage({ params }: { params: { slug: string } }
     const inferredTitle = params.slug.replace(/%20/g, ' ');
     return (
         <main>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div className='container m-auto my-10 text-azure-300 text-4xl text-center'>Loading...</div>}>
                 <Entry inferredTitle={inferredTitle} user={user} entry={await getEntryBySlug(slug)} />
             </Suspense>
         </main>
