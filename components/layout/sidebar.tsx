@@ -1,14 +1,10 @@
 import Link from "next/link";
+import { Menu } from "@components/layout/menu";
 import { Button } from "@components/ui/button";
 import fonts from "@util/fonts";
 import { signOut, auth } from "@lib/auth";
 
-import {
-  IconLayoutDashboard,
-  IconFilePlus,
-  IconListDetails,
-  IconLogin,
-} from "@tabler/icons-react";
+import { IconLogin } from "@tabler/icons-react";
 
 async function User() {
   let session = await auth();
@@ -24,13 +20,15 @@ async function User() {
               await signOut();
             }}
           >
-            <button className="flex items-center gap-2">
+            <button className="flex items-center gap-2 group">
               <img
                 src={user?.image!}
                 alt={user?.name!}
                 className="rounded-full w-10 h-10 border-2 border-opal-300"
               />
-              Sign Out
+              <div className="opacity-0 -translate-x-4 transition-all group-hover:opacity-100 group-hover:translate-x-0">
+                Sign Out
+              </div>
             </button>
           </form>
         </div>
@@ -48,50 +46,6 @@ async function User() {
   );
 }
 
-const menuItems = [
-  { label: "Dashboard", icon: <IconLayoutDashboard />, href: "/" },
-  { label: "Entries", icon: <IconListDetails />, href: "/entries" },
-  { label: "New", icon: <IconFilePlus />, href: "/new" },
-  // { label: 'Settings', icon: null href: '/settings' },
-  // { label: 'Users', icon: null href: '/users' },
-  // { label: 'Roles', icon: null href: '/roles' },
-  // { label: 'Permissions', icon: null href: '/permissions' },
-];
-
-const MenuItem = ({
-  label,
-  icon,
-  href,
-}: {
-  label: string;
-  icon: any;
-  href: string;
-}) => {
-  return (
-    <Link href={href}>
-      <button className="flex items-center gap-2 p-2 w-full">
-        {icon}
-        {label}
-      </button>
-    </Link>
-  );
-};
-
-export function Menu() {
-  return (
-    <div className="flex flex-col gap-2">
-      {menuItems.map((item) => (
-        <MenuItem
-          key={item.label}
-          label={item.label}
-          icon={item.icon}
-          href={item.href}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function Sidebar() {
   return (
     <div
@@ -101,6 +55,7 @@ export default function Sidebar() {
             relative
             z-10
             w-64
+            shrink-0
             `}
     >
       <div
@@ -110,31 +65,32 @@ export default function Sidebar() {
                 h-screen
                 fixed"
       >
-        <div>
+        <div className="grid gap-4 pt-4">
           <button
-            className="
-                    bg-natural-700
-                    flex
-                    items-center
-                    gap-2
-                    text-azure-200
-                    bg-
-                    p-4
-                    w-full"
+            className={`
+              bg-natural-700
+              items-center
+              gap-2
+              text-azure-200
+              p-4
+              w-full
+              ${true ? "grid" : "flex"}}`}
             type="button"
           >
             <img
               src="/data-vault-emblem.png"
-              className="w-10 h-10"
+              className={`m-auto ${true ? "w-32 h-32 mb-8" : "w-10 h-10"}`}
               alt="Data Valut Emblem"
             />
             <span className={`grow text-2xl ${fonts.cutive}`}>
               {"Data Vault".toUpperCase()}
             </span>
           </button>
-          <div className="py-4 px-2">{<Menu />}</div>
+          <Menu />
         </div>
-        <div className="py-4 px-2">{<User />}</div>
+        <div className="px-4 pb-2">
+          <User />
+        </div>
       </div>
     </div>
   );

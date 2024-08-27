@@ -24,14 +24,14 @@ export function EntryFormTitle({ form }: { form: any }) {
     <div className="">
       <input
         className="
-                    w-full
-                    text-4xl
-                    p-4
-                    bg-opacity-5
-                    bg-white
-                    rounded
-                    font-bold
-                    focus:outline-none"
+          w-full
+          text-4xl
+          p-4
+          bg-opacity-5
+          bg-white
+          rounded
+          font-bold
+          focus:outline-none"
         placeholder="title"
         key="title"
         {...form.getInputProps("title")}
@@ -68,15 +68,15 @@ export function EntryFormBody({
     <div className="grid gap-4">
       <textarea
         className={`
-                        w-full
-                        p-8
-                        bg-transparent
-                        rounded
-                        focus:outline-none
-                        min-h-[calc(100vh-400px)]
-                        overflow-auto
-                        ${className}
-                    `}
+          w-full
+          p-8
+          bg-transparent
+          rounded
+          focus:outline-none
+          min-h-[calc(100vh-400px)]
+          overflow-auto
+          ${className}
+        `}
         placeholder="[...]"
         key="content"
         {...form.getInputProps("body")}

@@ -26,7 +26,7 @@ const EntryList: React.FC<EntryListProps> = ({
           createdAt: entry.createdAt,
           updatedAt: entry.updatedAt,
         };
-      }),
+      })
     );
   }, [entries]);
 
@@ -38,8 +38,9 @@ const EntryList: React.FC<EntryListProps> = ({
             className="
               hover:dark:bg-azure-500
               hover:dark:bg-opacity-5
-            dark:text-azure-600
+            dark:text-azure-500
               relative
+              group
               px-3
               py-3
               grid

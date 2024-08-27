@@ -173,24 +173,22 @@ const Entry = (props: EntryPropsType) => {
                 <div className="relative">
                   <span
                     className="
-                                        bg-gradient-to-r
-                                        from-azure-700
-                                        to-azure-800
-                                        w-full
-                                        h-full
-                                        absolute
-                                        opacity-30
-                                        left-0
-                                        top-[-6px]"
+                      bg-azure-700
+                      w-full
+                      h-full
+                      absolute
+                      opacity-30
+                      left-0
+                      top-[-6px]"
                   ></span>
                   <Meta
                     className="p-8
-                                        translate-y-[-6px]
-                                        border
-                                        border-dashed
-                                        border-azure-600
-                                        rounded 
-                                        text-white"
+                      translate-y-[-6px]
+                      border
+                      border-dashed
+                      border-azure-600
+                      rounded 
+                      text-white"
                     metadataArr={metadataArr}
                     editing={editing}
                   />
@@ -205,11 +203,11 @@ const Entry = (props: EntryPropsType) => {
           >
             <div className="grid gap-10 grid-cols-2">
               <EntryFormBody
-                className={`bg-white bg-opacity-5  ${editing ? "" : "opacity-0"}`}
+                className={`${editing ? "" : "opacity-0"}`}
                 form={entryFormObj}
               />
               <Markdown
-                className="markdown-body text-gray-200 px-4"
+                className={`markdown-body p-4 text-gray-200 ${editing ? "bg-azure-700 bg-opacity-5 p-8" : ""}`}
                 remarkPlugins={[remarkGfm]}
               >
                 {entryFormObj.values.body}

@@ -56,8 +56,8 @@ export default function HyperText({
                 ? l
                 : i <= interations.current
                   ? text[i]
-                  : alphabets[getRandomInt(26)],
-            ),
+                  : alphabets[getRandomInt(26)]
+            )
           );
           interations.current = interations.current + 0.1;
         } else {
@@ -65,7 +65,7 @@ export default function HyperText({
           clearInterval(interval);
         }
       },
-      duration / (text.length * 10),
+      duration / (text.length * 10)
     );
     // Clean up interval on unmount
     return () => clearInterval(interval);
@@ -89,7 +89,7 @@ export default function HyperText({
                 text-5xl
                 w-12
                 font-bold
-                text-azure-500
+                text-azure-400
                 text-center
                 py-2
                 mx-[2px]
@@ -98,7 +98,7 @@ export default function HyperText({
                 to-stone-900
                 rounded`
                 : "",
-              className,
+              className
             )}
             {...framerProps}
           >

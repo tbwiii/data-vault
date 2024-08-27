@@ -21,9 +21,7 @@ export default async function RecentCreated() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          <h2 className="font-bold mb-4">Recently Edited</h2>
-        </CardTitle>
+        <CardTitle>Recently Edited</CardTitle>
       </CardHeader>
       <CardContent>
         <Suspense
