@@ -15,8 +15,8 @@ interface BlurFadeProps {
   children: React.ReactNode;
   className?: string;
   variant?: {
-    hidden: { y: number };
-    visible: { y: number };
+    hidden: { y?: number; x?: number; opacity?: number; filter?: string };
+    visible: { y?: number; x?: number; opacity?: number; filter?: string };
   };
   duration?: number;
   delay?: number;

@@ -1,52 +1,17 @@
-import Link from "next/link";
+"use client";
+import { useState } from "react";
+import Image from "next/image";
 import { Menu } from "@components/layout/menu";
-import { Button } from "@components/ui/button";
 import fonts from "@util/fonts";
-import { signOut, auth } from "@lib/auth";
+import BlurFade from "@components/magicui/blur-fade";
 
-import { IconLogin } from "@tabler/icons-react";
+export default function Sidebar({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-async function User() {
-  let session = await auth();
-  let user = session?.user;
-
-  return (
-    <div className="flex gap-2 items-center">
-      {user && (
-        <div className="p-2">
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <button className="flex items-center gap-2 group">
-              <img
-                src={user?.image!}
-                alt={user?.name!}
-                className="rounded-full w-10 h-10 border-2 border-opal-300"
-              />
-              <div className="opacity-0 -translate-x-4 transition-all group-hover:opacity-100 group-hover:translate-x-0">
-                Sign Out
-              </div>
-            </button>
-          </form>
-        </div>
-      )}
-
-      {!user && (
-        <Link href="/login" className="flex flex-center">
-          <Button>
-            <IconLogin />
-            Sign In
-          </Button>
-        </Link>
-      )}
-    </div>
-  );
-}
-
-export default function Sidebar() {
   return (
     <div
       className={`
@@ -54,43 +19,67 @@ export default function Sidebar() {
             bg-opacity-10
             relative
             z-10
-            w-64
             shrink-0
+            ${sidebarOpen ? "w-64" : "w-16"}
+            overflow-hidden
+            transition-all
             `}
     >
       <div
-        className="flex
+        className={`flex
                 flex-col
                 justify-between
                 h-screen
-                fixed"
+                fixed
+                ${sidebarOpen ? "w-64" : "w-16"}`}
       >
-        <div className="grid gap-4 pt-4">
+        <div className={`${sidebarOpen ? "w-64" : "w-16"} w-full pt-4`}>
           <button
             className={`
+              mx-auto
               bg-natural-700
               items-center
-              gap-2
+              gap-8
               text-azure-200
-              p-4
-              w-full
-              ${true ? "grid" : "flex"}}`}
+              py-4
+              grid
+              pointer-hover`}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
             type="button"
           >
-            <img
-              src="/data-vault-emblem.png"
-              className={`m-auto ${true ? "w-32 h-32 mb-8" : "w-10 h-10"}`}
-              alt="Data Valut Emblem"
-            />
-            <span className={`grow text-2xl ${fonts.cutive}`}>
-              {"Data Vault".toUpperCase()}
-            </span>
+            {sidebarOpen && (
+              <>
+                <BlurFade yOffset={-20}>
+                  <Image
+                    src="/data-vault-emblem.png"
+                    alt="Data Valut Emblem"
+                    width={150}
+                    height={150}
+                    className="transition-all m-auto mb-8"
+                  />
+                </BlurFade>
+                <BlurFade>
+                  <span className={`grow text-2xl ${fonts.cutive}`}>
+                    {"Data Vault".toUpperCase()}
+                  </span>
+                </BlurFade>
+              </>
+            )}
+            {!sidebarOpen && (
+              <BlurFade yOffset={-6}>
+                <Image
+                  src="/data-vault-emblem.png"
+                  alt="Data Valut Emblem"
+                  width={40}
+                  height={40}
+                  className="transition-all m-auto mb-4"
+                />
+              </BlurFade>
+            )}
           </button>
-          <Menu />
+          <Menu sidebarOpen={sidebarOpen} />
         </div>
-        <div className="px-4 pb-2">
-          <User />
-        </div>
+        <div className="pb-2 flex items-center">{children}</div>
       </div>
     </div>
   );

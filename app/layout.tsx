@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@components/theme-provider";
 import Sidebar from "@/components/layout/sidebar";
+import AuthButton from "@/components/auth-button";
 
 export const metadata: Metadata = {
   title: "Data Vault",
@@ -23,7 +24,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex min-h-screen">
-            <Sidebar />
+            <Sidebar>
+              <AuthButton />
+            </Sidebar>
             <main id="main" className="grow">
               {children}
             </main>
