@@ -1,6 +1,6 @@
 "use client";
-import { EntryType } from "@schema/entries";
 import { useState } from "react";
+import { EntryType } from "@schema/entries";
 import { useForm } from "@mantine/form";
 import {
   IconEdit,
@@ -11,13 +11,10 @@ import {
   IconCancel,
   IconDeviceFloppy,
   IconStack2,
+  IconLock,
+  IconLockOpen,
 } from "@tabler/icons-react";
-import {
-  EntryForm,
-  EntryFormTitle,
-  EntryFormBody,
-  EntryFormMeta,
-} from "./EntryForm";
+import { EntryForm, EntryFormTitle, EntryFormBody } from "./EntryForm";
 import MenuBar from "./menu-bar";
 import { MenuButtonType } from "./menu-bar";
 import Markdown from "react-markdown";
@@ -27,13 +24,7 @@ import slugOMatic from "@util/slugOMatic";
 import Meta from "./Meta";
 import remarkGfm from "remark-gfm";
 import api from "@lib/api";
-import { User } from "next-auth";
-
-type EntryPropsType = {
-  entry: EntryType;
-  inferredTitle: string;
-  user?: User;
-};
+import { EntryPropsType } from "@lib/types";
 
 const confirmDelete = async (entryId: number) => {
   if (!confirm("Are you sure you want to delete this entry?")) {
@@ -69,6 +60,7 @@ const Entry = (props: EntryPropsType) => {
           title: props.inferredTitle,
           body: "",
           owner: props.user?.email ?? null,
+          private: false,
         },
   });
 
@@ -132,7 +124,15 @@ const Entry = (props: EntryPropsType) => {
       label: "Slug",
       value: entry?.slug ?? slugPlaceholder,
       icon: <IconLink size="16" />,
-      input: <EntryFormMeta form={entryFormObj} />,
+    },
+    {
+      label: "Access",
+      value: entry?.private ? "Private" : "Public",
+      icon: entry?.private ? (
+        <IconLock size="16" />
+      ) : (
+        <IconLockOpen size="16" />
+      ),
     },
     {
       label: "Created",
@@ -170,27 +170,21 @@ const Entry = (props: EntryPropsType) => {
           {metaVisible && (
             <BlurFade delay={0.15} yOffset={-6} inView>
               <div className="container m-auto">
-                <div className="relative">
-                  <span
-                    className="
-                      bg-azure-700
-                      w-full
-                      h-full
-                      absolute
-                      opacity-30
-                      left-0
-                      top-[-6px]"
-                  ></span>
+                <div
+                  className="relative
+                  bg-azure-700
+                  bg-opacity-15
+                  border
+                  border-dashed
+                  border-azure-600
+                  rounded
+                  text-azure-300"
+                >
                   <Meta
-                    className="p-8
-                      translate-y-[-6px]
-                      border
-                      border-dashed
-                      border-azure-600
-                      rounded 
-                      text-white"
+                    className="p-8"
                     metadataArr={metadataArr}
                     editing={editing}
+                    form={entryFormObj}
                   />
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { eq, desc, asc, sql } from "drizzle-orm";
+import { eq, and, or, desc, asc, sql } from "drizzle-orm";
 import { boolean, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { db } from "@db";
 import slugOMatic from "@util/slugOMatic";
@@ -90,7 +90,12 @@ function whereBuilder(table: any, where: Partial<EntryType>) {
   let query = sql``;
 
   // return query;
-  return eq(entries.deleted, false);
+  return or(
+    and(
+      eq(entries.deleted, false),
+      eq(entries.private, false)
+    ),
+  );
 }
 
 export async function getEntreies({

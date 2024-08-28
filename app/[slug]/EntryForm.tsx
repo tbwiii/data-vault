@@ -1,6 +1,7 @@
 import { EntryType } from "@schema/entries";
 import slugOMatic from "@util/slugOMatic";
 import { ReactElement } from "react";
+import { Switch } from "@/components/ui/switch";
 import BlurFade from "@/components/magicui/blur-fade";
 
 export const EntryForm = ({
@@ -43,16 +44,26 @@ export function EntryFormTitle({ form }: { form: any }) {
 export function EntryFormMeta({ form }: { form: any }) {
   const slugPlaceholder = slugOMatic(form.values?.title);
   return (
-    <div className="flex gap-2 items-center grow">
-      <label>Slug:</label>
-      <input
-        className="w-full p-2 rounded shadow focus:outline-none"
-        type="text"
-        placeholder={slugPlaceholder}
-        key="slug"
-        preventDefault
-        {...form.getInputProps("slug")}
-      />
+    <div className="grid gap-4">
+      <div className="flex gap-2 items-center grow">
+        <label>Slug:</label>
+        <input
+          className="w-full p-2 rounded shadow focus:outline-none"
+          type="text"
+          placeholder={slugPlaceholder}
+          key="slug"
+          preventDefault
+          {...form.getInputProps("slug")}
+        />
+      </div>
+      <div className="flex gap-2 items-center grow">
+        <label>Private Entry:</label>
+        <Switch
+          checked={form.values.private}
+          onCheckedChange={(checked) => form.setValues({ private: checked })}
+          {...form.getInputProps("private")}
+        />
+      </div>
     </div>
   );
 }
