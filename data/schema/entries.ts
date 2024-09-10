@@ -7,10 +7,10 @@ import blank from "@/lib/util/blank";
 
 export const entries = pgTable("entries", {
   entryId: serial("entry_id").primaryKey(),
-  title: text("title").default("Untitled"),
-  body: text("body").default(""),
-  slug: text("slug").notNull().unique(),
-  owner: text("owner").notNull(),
+  title: text("title"),
+  body: text("body"),
+  slug: text("slug"),
+  owner: text("owner"),
   private: boolean("private").default(true),
   deleted: boolean("deleted").default(false),
   createdAt: text("created_at"),

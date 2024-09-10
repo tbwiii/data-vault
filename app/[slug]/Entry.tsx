@@ -70,6 +70,7 @@ const Entry = (props: EntryPropsType) => {
       title: entry.title ?? "",
       body: entry.body ?? "",
       private: entry.private ?? false,
+      slug: entry.slug ?? "",
     });
   }
 
