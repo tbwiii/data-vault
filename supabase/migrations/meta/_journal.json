@@ -57,6 +57,13 @@
       "when": 1724643132128,
       "tag": "0007_right_silver_fox",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1725973952046,
+      "tag": "0008_blue_molecule_man",
+      "breakpoints": true
     }
   ]
 }
