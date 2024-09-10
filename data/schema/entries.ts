@@ -7,10 +7,10 @@ import blank from "@/lib/util/blank";
 
 export const entries = pgTable("entries", {
   entryId: serial("entry_id").primaryKey(),
-  title: text("title"),
-  body: text("body"),
-  slug: text("slug"),
-  owner: text("owner"),
+  title: text("title").default("Untitled"),
+  body: text("body").default(""),
+  slug: text("slug").notNull().unique(),
+  owner: text("owner").notNull(),
   private: boolean("private").default(true),
   deleted: boolean("deleted").default(false),
   createdAt: text("created_at"),
@@ -90,12 +90,7 @@ function whereBuilder(table: any, where: Partial<EntryType>) {
   let query = sql``;
 
   // return query;
-  return or(
-    and(
-      eq(entries.deleted, false),
-      eq(entries.private, false)
-    ),
-  );
+  return or(and(eq(entries.deleted, false), eq(entries.private, false)));
 }
 
 export async function getEntreies({

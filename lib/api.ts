@@ -1,6 +1,6 @@
 const rootUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-export default {
+const types = {
   $get: (slug: string) => {
     try {
       return fetch(`${rootUrl}/api${slug}`, { cache: "no-store" });
@@ -37,3 +37,5 @@ export default {
     ).json();
   },
 };
+
+export default types;

@@ -63,8 +63,14 @@ const Entry = (props: EntryPropsType) => {
     },
   });
 
+  // TODO: Get rid of mantine form handling 🤦
   if (entry?.entryId) {
-    entryFormObj.initialize(entry);
+    entryFormObj.initialize({
+      ...entry,
+      title: entry.title ?? "",
+      body: entry.body ?? "",
+      private: entry.private ?? false,
+    });
   }
 
   const submit = async (values: Partial<EntryType>) => {
