@@ -54,18 +54,17 @@ const Entry = (props: EntryPropsType) => {
   };
 
   const entryFormObj = useForm({
-    initialValues: props.entry?.entryId
-      ? entry
-      : {
-          title: props.inferredTitle,
-          body: "",
-          owner: props.user?.email ?? null,
-          private: false,
-        },
+    initialValues: {
+      title: "new",
+      body: "",
+      slug: "",
+      owner: props.user?.email ?? null,
+      private: false,
+    },
   });
 
-  if (entryFormObj.values?.title === "new") {
-    entryFormObj.values.title = "";
+  if (entry?.entryId) {
+    entryFormObj.initialize(entry);
   }
 
   const submit = async (values: Partial<EntryType>) => {
